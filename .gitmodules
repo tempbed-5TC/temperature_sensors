@@ -1,0 +1,6 @@
+[submodule "ez430-drivers"]
+	path = ez430-drivers
+	url = https://github.com/tempbed-5TC/ez430-drivers.git
+[submodule "protothreads"]
+	path = protothreads
+	url = https://github.com/tempbed-5TC/protothreads.git
