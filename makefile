@@ -1,6 +1,6 @@
-NAME	= temperature_sensor
-LIBS    = -lez430
-SRC		= main.c send.c
+NAMES		= anchor token
+LIBS    	= -lez430
+SRC			= radio.c
 SRC_DIR		= src
 INC_DIR		= -I./ez430-drivers/inc -Iprotothreads
 OUT_DIR		= bin
@@ -17,15 +17,22 @@ LDFLAGS		= -static -L${LIB_DIR} ${LIBS}
 CC			= msp430-gcc
 MAKEDEPEND	= ${CC} ${CFLAGS} -MM -MP -MT $@ -MF
 
-all: ${OUT_DIR}/${NAME}.elf ez430-drivers
+all: $(patsubst %, ${OUT_DIR}/%.elf,${NAMES}) ez430-drivers
 
-flash: all
-	mspdebug rf2500 "prog ${OUT_DIR}/${NAME}.elf"
+flash_token: all
+	mspdebug rf2500 "prog ${OUT_DIR}/anchor.elf"
 
-${OUT_DIR}/${NAME}.elf: ${OBJ}
+flash_anchor: all
+	mspdebug rf2500 "prog ${OUT_DIR}/token.elf"
+
+${OUT_DIR}/anchor.elf: ${OBJ_DIR}/anchor.o
+
+${OUT_DIR}/token.elf: ${OBJ_DIR}/token.o
+
+${OUT_DIR}/%.elf: ${OBJ}
 	@mkdir -p ${OUT_DIR}
-	${CC} -mmcu=${CPU} ${OBJ} ${LDFLAGS} -o $@
-	msp430-size ${OUT_DIR}/${NAME}.elf
+	${CC} -mmcu=${CPU} $^ ${LDFLAGS} -o $@
+	msp430-size $@
 
 $(OBJ_DIR)/%.o: ${SRC_DIR}/%.c
 	@mkdir -p ${OBJ_DIR} ${DEP_DIR}

@@ -1,4 +1,4 @@
-#include "send.h"
+#include "radio.h"
 /**
  *  \file   send.c
  *  \brief  eZ430-RF2500 radio communication demo
@@ -18,10 +18,9 @@ void printhex(char *buffer, unsigned int len)
 
 void dump_message(char *buffer)
 {
-    printf("message received\r\n  content: ");
-    printhex(buffer, PKTLEN);
-    printf("\r\n  from node: 0x");
-    printf("%02X\r\n", buffer[MSG_BYTE_NODE_ID]);
+    //printhex(buffer, PKTLEN);
+    printf("{\"sensor_id\": ");
+    printf("\"%02X\",", buffer[MSG_BYTE_NODE_ID]);
 
 
     if(buffer[MSG_BYTE_TYPE] == MSG_TYPE_TEMPERATURE)
@@ -30,7 +29,7 @@ void dump_message(char *buffer)
         char *pt = (char *) &temperature;
         pt[0] = buffer[MSG_BYTE_CONTENT + 1];
         pt[1] = buffer[MSG_BYTE_CONTENT];
-        printf("  temperature: %d\r\n", temperature);
+        printf("\"temperature\": %d}\r\n", temperature);
     }
 
 }

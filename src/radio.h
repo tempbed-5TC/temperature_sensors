@@ -1,5 +1,5 @@
-#ifndef SEND_H_INCLUDED
-#define SEND_H_INCLUDED
+#ifndef RADIO_H_INCLUDED
+#define RADIO_H_INCLUDED
 
 #include <msp430f2274.h>
 
@@ -131,4 +131,4 @@ PT_THREAD(thread_antibouncing(struct pt *pt));
 PT_THREAD(thread_periodic_send(struct pt *pt));
 
 
-#endif //SEND_H_INCLUDED
+#endif //RADIO_H_INCLUDED
